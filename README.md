@@ -22,4 +22,10 @@ QSRV and pva2pva gateway: https://mdavidsaver.github.io/pva2pva/
 
 https://github.com/shroffk/cs-studio-training/tree/2018-training
 
+### areaDetector
+
+areaDetector main page: http://cars9.uchicago.edu/software/epics/areaDetector.html
+
+areaDetector documentation: http://cars9.uchicago.edu/software/epics/areaDetectorDoc.html
+
 
