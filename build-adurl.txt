@@ -1,0 +1,46 @@
+cd ~/build-epics/areaDetector
+git submodule update --init ADURL 
+cd ADURL
+git checkout R2-2
+
+cd ~/build-epics/areaDetector/configure
+<edit file> RELEASE.local
+<add line> ADURL=$(AREA_DETECTOR)/ADURL
+
+<edit file> CONFIG_SITE.local
+<edit line> WITH_GRAPHICSMAGICK=YES
+<add line> GRAPHICSMAGICK_EXTERNAL=NO
+<add line> BUILD_IOCS=YES
+
+cd ~/build-epics/areaDetector
+make
+
+export EPICS_HOST_ARCH=linux-x86_64
+
+cd <OPI_repository_location; e.g., ~/git/201803_training_opi>
+git pull
+
+cd ADURL/iocs/urlIOC/iocBoot/iocURLDriver
+./start_epics
+
+<reload launcher.opi>
+- right click on launcher.opi
+- Refresh OPI 
+
+<use new ADURL buttons to launch displays that allow interaction with new IOC>
+<populate URL fields with either file paths:
+file examples: 
+/usr/share/backgrounds/gnome/Spaceflare.jpg
+
+http examples:
+http://my.server.com/path/image_name.jpg
+
+>
+** displays do not handle color images.
+** need to use ColorConvert plugin to convert to Monochrome
+
+
+
+
+
+
