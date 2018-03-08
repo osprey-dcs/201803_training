@@ -1,46 +1,62 @@
+# Instructions for extending ~/build-epics/areaDetector to include ADURL IOC
+
+# Get areaDetector ADURL code
 cd ~/build-epics/areaDetector
 git submodule update --init ADURL 
 cd ADURL
 git checkout R2-2
 
+# Add ADURL to EPICS build
 cd ~/build-epics/areaDetector/configure
 <edit file> RELEASE.local
 <add line> ADURL=$(AREA_DETECTOR)/ADURL
 
 <edit file> CONFIG_SITE.local
-<edit line> WITH_GRAPHICSMAGICK=YES
+<edit line to> WITH_GRAPHICSMAGICK=YES
 <add line> GRAPHICSMAGICK_EXTERNAL=NO
 <add line> BUILD_IOCS=YES
 
+# Compile new code
 cd ~/build-epics/areaDetector
 make
 
+<wait for a while> 
+
+# Set required environment variable
 export EPICS_HOST_ARCH=linux-x86_64
 
+# Get new displays
 cd <OPI_repository_location; e.g., ~/git/201803_training_opi>
 git pull
 
+# Start IOC
 cd ADURL/iocs/urlIOC/iocBoot/iocURLDriver
 ./start_epics
 
+# Reload launcher.opi to get updates
 <reload launcher.opi>
 - right click on launcher.opi
 - Refresh OPI 
 
 <use new ADURL buttons to launch displays that allow interaction with new IOC>
-<populate URL fields with either file paths:
+
+# Set up ADURL
+<configure required plugins>
+- enable: NDPluginStdArrays, NDPluginPva, NDPluginColorConvert,NDPluginStats
+
+# Open URL config
+URLDriver.opi -> URL Setup
+enter text in URL fields as follows:
+
 file examples: 
 /usr/share/backgrounds/gnome/Spaceflare.jpg
 
 http examples:
 http://my.server.com/path/image_name.jpg
 
->
-** displays do not handle color images.
-** need to use ColorConvert plugin to convert to Monochrome
-
-
-
-
-
+# Color conversion plugin
+- displays do not handle color images.
+- need to use ColorConvert plugin to convert to Monochrome
+- pipe CC1 to input of NDPluginStdArrays, NDPluginPva
+- set Color Mode Out = Mono
 
