@@ -16,4 +16,8 @@ P4P: https://mdavidsaver.github.io/p4p/
 pvAccessCPP: https://mdavidsaver.github.io/pvAccessCPP/
 QSRV and pva2pva gateway: https://mdavidsaver.github.io/pva2pva/
 
+### Epics services and CS-Studio training material
+
+https://github.com/shroffk/cs-studio-training/tree/2018-training
+
 
