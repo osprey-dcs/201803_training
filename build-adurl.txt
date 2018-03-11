@@ -29,8 +29,16 @@ export EPICS_HOST_ARCH=linux-x86_64
 cd <OPI_repository_location; e.g., ~/git/201803_training_opi>
 git pull
 
-# Start IOC
+# prepare IOC directory and IOC startup command script
 cd ADURL/iocs/urlIOC/iocBoot/iocURLDriver
+ln -s ./envPaths envPaths.linux
+# remove command to start MEDM
+<edit file> start_epics
+<remove (or comment out) this line > medm -x -macro "P=13URL1:, R=cam1:" URLDriver.adl &
+# after line with   export MAGICK_DEBUG=configure,exception
+<add line > export EPICS_HOST_ARCH=linux-x86_64
+
+# Start IOC
 ./start_epics
 
 # Reload launcher.opi to get updates
